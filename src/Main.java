@@ -11,7 +11,7 @@ public class Main {
 	}
 	
 	/**
-	 * Prints result on console
+	 * Starts program.
 	 */
 	public static void start() {
 		System.out.println("---------------------------------------");
@@ -39,6 +39,9 @@ public class Main {
 		
 	}
 
+	/**
+	 * Prints result on console
+	 */
 	public static void printResult(String s, double d) {
 		System.out.printf("You exchanged: %.2f %s. ", d, s);
 	}
@@ -132,8 +135,9 @@ public class Main {
 	}
 	
 	/**
-	 * Returns array of string read from file, with each string representing one line in file
-	 * @return Array of strings
+	 * Returns array of string read from file, with each string representing one line in file.
+	 * @param fileName A path to file.
+	 * @return Array of strings.
 	 */
 	public static String[] getArrayFromFile(String fileName){
 		TextIO.readFile(fileName);
