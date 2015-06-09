@@ -10,13 +10,23 @@ public class Main {
 		start();
 	}
 	
+	/**
+	 * Prints result on console
+	 */
 	public static void start() {
 		System.out.println("---------------------------------------");
 		System.out.println("----------EXCHANGE CURRENCIES----------");
 		System.out.println("---------------------------------------");
 		
-		String[] currencyNames = getNumOfCurrency(getArrayFromFile());
-		double[] currencyValues = getCurrencyValues(getArrayFromFile());
+		String fileName = "src/Currency.txt";
+		try {
+			TextIO.readFile(fileName);
+		} catch (Exception e) {
+			System.out.println("File does not exist");
+			System.exit(0);
+		}
+		String[] currencyNames = getNumOfCurrency(getArrayFromFile(fileName));
+		double[] currencyValues = getCurrencyValues(getArrayFromFile(fileName));
 		
 		int cur1 = getCurrency(currencyNames);
 
@@ -125,8 +135,7 @@ public class Main {
 	 * Returns array of string read from file, with each string representing one line in file
 	 * @return Array of strings
 	 */
-	public static String[] getArrayFromFile(){
-		String fileName = "src/Currency.txt";
+	public static String[] getArrayFromFile(String fileName){
 		TextIO.readFile(fileName);
 		int length = 0;
 		while(!TextIO.eof()){
