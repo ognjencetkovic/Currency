@@ -6,13 +6,12 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 /**
- * 
+ * Window that provides information of the previous game and asks players if they want another game.
  * @author Ognjen
  *
  */
@@ -25,7 +24,9 @@ public class OptionWindow extends JFrame{
 	private JButton noBtn;
 	JPanel btnPanel; 
 	
-	
+	/**
+	 * @param text Text to be displayed.
+	 */
 	public OptionWindow(String text) {
 		super();
 		setLayout(new BorderLayout());

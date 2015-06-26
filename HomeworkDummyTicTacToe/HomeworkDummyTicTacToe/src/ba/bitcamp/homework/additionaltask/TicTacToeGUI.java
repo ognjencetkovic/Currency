@@ -5,10 +5,13 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
-
+/**
+ * Window containing Tic Tac Toe table.
+ * @author ognjen.cetkovic
+ *
+ */
 public class TicTacToeGUI extends JFrame{
 	
 	private static final long serialVersionUID = 3422916801085155976L;
@@ -20,6 +23,9 @@ public class TicTacToeGUI extends JFrame{
 	private String sign;
 	private TicTacToeRun game;
 	
+	/**
+	 * Default constructor.
+	 */
 	public TicTacToeGUI() {
 		super();
 		setLayout(new GridLayout(TicTacToeGUI.NUMBER_OF_ROWS_AND_COLUMNS, TicTacToeGUI.NUMBER_OF_ROWS_AND_COLUMNS));
@@ -45,7 +51,6 @@ public class TicTacToeGUI extends JFrame{
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
-		
 	}
 	
 	private class Action implements ActionListener {
@@ -69,6 +74,9 @@ public class TicTacToeGUI extends JFrame{
 		}
 	}
 	
+	/**
+	 * Changes sign from X to O, and vice versa.
+	 */
 	public void changeSign(){
 		if(sign == TicTacToeGUI.SIGN_O)
 			sign = TicTacToeGUI.SIGN_X;
@@ -76,6 +84,12 @@ public class TicTacToeGUI extends JFrame{
 			sign = TicTacToeGUI.SIGN_O;
 	}
 	
+	/**
+	 * Inputs new results and checks if the game is over, if so, constructs OptionWindow.
+	 * @param button Button that was pressed
+	 * @param row Row of the button
+	 * @param column Column of the button
+	 */
 	public void turn(JButton button, int row, int column){
 		button.setText(sign);
 		game.changeTable(row, column);

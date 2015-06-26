@@ -1,19 +1,23 @@
 package ba.bitcamp.homework.additionaltask;
-
+/**
+ * Class containing logic needed to run a game of Tic Tac Toe.
+ * @author ognjen.cetkovic
+ *
+ */
 public class TicTacToeRun {
 
+	public static final int GAME_ACTIVE = -1;
+	public static final int GAME_IS_A_TIE = 0;
 	public static final int PLAYER_X = 1;
 	public static final int PLAYER_O = 2;
 	public static final int NUMBER_OF_ROWS_AND_COLUMNS = 3;
-	public static final int GAME_ACTIVE = -1;
-	public static final int GAME_IS_A_TIE = 0;
 	
 	private int[][] table;
 	private int player;
 	private int counter;
 	
 	/**
-	 * @param board
+	 * Default constructor.
 	 */
 	public TicTacToeRun() {
 		super();
@@ -23,20 +27,18 @@ public class TicTacToeRun {
 	}
 	
 	/**
-	 * @return the player
+	 * Inputs value at row i, column j.
+	 * @param i A row
+	 * @param j A column
 	 */
-	public int getPlayer() {
-		return player;
-	}
-	public void getEmptyTable(){
-		table = new int[TicTacToeGUI.NUMBER_OF_ROWS_AND_COLUMNS][TicTacToeGUI.NUMBER_OF_ROWS_AND_COLUMNS];
-	}
-	
 	public void changeTable(int i, int j){
 		table[i][j] = player;
 		counter++;
 	}
 	
+	/**
+	 * Changes players (X to O, and vice versa).
+	 */
 	public void changePlayer(){
 		if(player == TicTacToeRun.PLAYER_X)
 			player = TicTacToeRun.PLAYER_O;
@@ -44,6 +46,11 @@ public class TicTacToeRun {
 			player = TicTacToeRun.PLAYER_X;
 	}
 	
+	/**
+	 * Checks game`s status and returns -1 if game is still active, 0 if it`s a tie, and 1 or 2 if 
+	 * one of the players won (1 if it is X, ot 2 if it is O).
+	 * @return
+	 */
 	public int getStatus(){
 		if(checkRows() || checkColumns() || checkDiagonals())
 			return player;
@@ -55,8 +62,6 @@ public class TicTacToeRun {
 
 	/**
 	 * Returns true if one row of given matrix contains Xs or Os (1s or 2s represent players in code). 
-	 * @param table A matrix representing Tic Tac Toe table
-	 * @param player Index of player
 	 * @return True if one row contains Xs or Os
 	 */
 	public boolean checkRows(){
@@ -78,8 +83,6 @@ public class TicTacToeRun {
 	
 	/**
 	 * Returns true if one column of given matrix contains Xs or Os (1s or 2s representing players in code). 
-	 * @param table A matrix representing Tic Tac Toe table
-	 * @param player Index of player
 	 * @return True if one column contains Xs or Os
 	 */
 	public boolean checkColumns(){
@@ -103,8 +106,6 @@ public class TicTacToeRun {
 	
 	/**
 	 * Returns true if one diagonal of given matrix contains Xs or Os (1s or 2s representing players in code). 
-	 * @param table A matrix representing Tic Tac Toe table
-	 * @param player Index of player
 	 * @return True if one diagonal contains Xs or Os
 	 */
 	public boolean checkDiagonals(){
