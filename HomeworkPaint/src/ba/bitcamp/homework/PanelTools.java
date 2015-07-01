@@ -64,7 +64,7 @@ public class PanelTools extends JPanel {
 				PanelPaint.setPen(false);
 			} else if (e.getSource() == btnUndo){
 				PanelPaint.undo();
-			} else if (e.getSource() == btnUndo){
+			} else if (e.getSource() == btnRedo){
 				PanelPaint.redo();
 			}
 			

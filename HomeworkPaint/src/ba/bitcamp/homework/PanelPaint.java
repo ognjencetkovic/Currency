@@ -4,8 +4,8 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 
 import javax.swing.JPanel;
 
@@ -23,15 +23,15 @@ public class PanelPaint extends JPanel{
 	private static boolean pen = true;
 	private static boolean brush = false;
 	
-	
+	private static PanelPaint panel;
 	
 	public PanelPaint() {
 		super();
-		
+		panel = this;
 		
 		setBackground(Color.WHITE);
 		addMouseMotionListener(new MouseHandler());
-		
+		addMouseListener(new MouseHandler());
 		
 	}
 	
@@ -101,25 +101,19 @@ public class PanelPaint extends JPanel{
 	}
 	
 	public static void undo(){
-		if(PanelPaint.points.getLength() < 10){
-			PanelPaint.points.setLength(0);
-		}
-		PanelPaint.points.setLength(PanelPaint.points.getLength() - 10);
-		
+		PanelPaint.points.undoArray();
+		panel.repaint();
 	}
 
 	public static void redo(){
-		//TODO
-		if(PanelPaint.points.getLength() < 10){
-			PanelPaint.points.setLength(0);
-		}
-		PanelPaint.points.setLength(PanelPaint.points.getLength() - 10);
+		PanelPaint.points.redoArray();
+		panel.repaint();
 	}
 	
 	public void useBrush(Graphics g){
 		for (int i = 0; i < PanelPaint.points.getLength(); i++) {
 			Point p = PanelPaint.points.elementAt(i);
-			if(p.isBrush()){
+			if(p.isBrush() && !p.isPen()){
 				g.setColor(p.getColor());
 				g.fillOval(p.getX(), p.getY(), p.getSize(), p.getSize());				
 			}
@@ -132,7 +126,7 @@ public class PanelPaint extends JPanel{
 		for (int i = 0; i < PanelPaint.points.getLength() - 1; i++) {
 			Point p1 = PanelPaint.points.elementAt(i);
 			Point p2 = PanelPaint.points.elementAt(i+1);
-			if(p1.isPen()){
+			if(p1.isPen() && !p1.isBrush()){
 				g.setColor(p1.getColor());
 				g2d.setStroke(new BasicStroke(p1.getSize()));
 				g.drawLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());							
@@ -140,7 +134,7 @@ public class PanelPaint extends JPanel{
 		}
 	}
 	
-	private class MouseHandler implements MouseMotionListener {
+	private class MouseHandler extends MouseAdapter {
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
@@ -148,13 +142,16 @@ public class PanelPaint extends JPanel{
 			PanelPaint.points.addPoint(newPoint);
 			if(e.isControlDown())
 				newPoint.setColor(Color.WHITE);
+			points.disableRedo();
 			repaint();
 		}
 
 		@Override
-		public void mouseMoved(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
+		public void mouseReleased(MouseEvent e) {
+			super.mouseReleased(e);
+			Point newPoint = new Point(e.getX(), e.getY(), activeColor, activeSize, false, false);
+			PanelPaint.points.addPoint(newPoint);
+			PanelPaint.points.breakArray();
 		}
 		
 	}
